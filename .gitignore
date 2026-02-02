@@ -1,0 +1,56 @@
+# Игнорировать файлы и папки Maven
+target/
+pom.xml.releaseBackup
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Игнорировать файлы IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Игнорировать временные файлы
+*.class
+*.log
+*.jar
+*.war
+*.ear
+hs_err_pid*
+
+# Игнорировать файлы отладки
+*.hprof
+*.jfr
+
+# Игнорировать отчеты тестирования
+test-output/
+reports/
+surefire-reports/
+testng-results.xml
+
+# Игнорировать файлы конфигурации
+application.properties
+application-local.properties
+
+# Специфичные для RestAssured
+rest-assured.json
+
+# Специфичные для TestNG
+testng.xml.timestamp
+
+# Общие файлы
+*.DS_Store
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Локальные настройки
+local.properties
+
+# Кеши и временные файлы
+.cache/
+.metadata/
+.factorypath
