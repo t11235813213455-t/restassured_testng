@@ -61,4 +61,13 @@ public class TestClient {
 
         return new BookValidatableResponse(response);
     }
+
+    public BookValidatableResponse delete(Integer id) {
+        Response response = getRequestSpec().when().
+                delete("/books/{id}", id);
+
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
+    }
 }
