@@ -1,5 +1,6 @@
 package ru.qaway.bookstore.tests.rest.client;
 
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import ru.qaway.bookstore.tests.rest.model.request.Book;
 
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
+import ru.qaway.bookstore.tests.rest.model.response.BookValidatableResponse;
 
 
 @AllArgsConstructor
@@ -33,11 +35,21 @@ public class TestClient {
                 body(body);
     }
 
-    public ValidatableResponse create(Book book) {
-        ValidatableResponse response = getRequestSpec(book).when().
-                post("/books").
-                then().log().all();
+    public BookValidatableResponse create(Book book) {
+        Response response = getRequestSpec(book).when().
+                post("/books");
 
-        return response;
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
+    }
+
+    public BookValidatableResponse read(Integer id) {
+        Response response = getRequestSpec().when().
+                get("/books/{id}", id);
+
+        response.then().log().all();
+
+        return new BookValidatableResponse(response);
     }
 }

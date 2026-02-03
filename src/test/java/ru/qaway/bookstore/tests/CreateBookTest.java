@@ -7,6 +7,7 @@ import ru.qaway.bookstore.tests.props.TestConfig;
 import ru.qaway.bookstore.tests.rest.client.TestClient;
 import ru.qaway.bookstore.tests.rest.enums.Category;
 import ru.qaway.bookstore.tests.rest.model.request.Book;
+import ru.qaway.bookstore.tests.rest.model.response.BookValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
@@ -19,15 +20,18 @@ public class CreateBookTest {
                 "The story about Tom Sawyer.",
                 "Mark Twain", 350, 10, Category.Adventures);
 
-        TestClient client = new TestClient();
+        TestClient testClient = new TestClient();
 
-        client.create(book).assertThat().
-                statusCode(201).
-                body("id", Matchers.notNullValue()).
-                body("title", Matchers.equalTo("The Adventures of Tom Sawyer")).
-                body("description", Matchers.equalTo("The story about Tom Sawyer.")).
-                body("author", Matchers.equalTo("Mark Twain")).
-                body("price", Matchers.equalTo(350)).
-                body("count", Matchers.equalTo(10));
+        BookValidatableResponse response = testClient.create(book).
+                checkStatusCode(201).
+                checkIdNotNull().
+                checkLastUpdated().
+                checkBook(book);
+
+        testClient.read(response.getId()).
+                checkStatusCode(200).
+                checkId(response.getId()).
+                checkLastUpdated().
+                checkBook(book);
     }
 }

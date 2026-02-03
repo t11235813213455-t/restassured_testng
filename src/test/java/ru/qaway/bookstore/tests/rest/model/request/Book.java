@@ -1,15 +1,14 @@
 package ru.qaway.bookstore.tests.rest.model.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.qaway.bookstore.tests.rest.enums.Category;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Book {
 
     private String title;
@@ -19,4 +18,12 @@ public class Book {
     private Integer count;
     private Category category;
 
+    public Book(Book book) {
+        this.title = book.title;
+        this.description = book.description;
+        this.author = book.author;
+        this.price = book.price;
+        this.count = book.count;
+        this.category = book.category;
+    }
 }
