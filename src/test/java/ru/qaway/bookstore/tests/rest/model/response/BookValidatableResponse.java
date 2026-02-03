@@ -50,4 +50,11 @@ public class BookValidatableResponse {
     public Integer getId() {
         return response.jsonPath().getInt("id");
     }
+
+    public BookValidatableResponse checkErrorResponse(BookResponse expected) {
+        response.then().body("timestamp", Matchers.notNullValue());
+        Assert.assertEquals(model, expected);
+
+        return this;
+    }
 }

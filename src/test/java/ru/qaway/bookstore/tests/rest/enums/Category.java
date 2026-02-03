@@ -5,5 +5,6 @@ public enum Category {
     Detective,
     Fiction,
     Horror,
-    Thriller;
+    Thriller,
+    Unknown;
 }

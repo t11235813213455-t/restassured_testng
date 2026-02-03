@@ -1,24 +1,18 @@
-package ru.qaway.bookstore.tests;
+package ru.qaway.bookstore.tests.create;
 
-import io.restassured.http.ContentType;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.hamcrest.Matchers;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ru.qaway.bookstore.tests.props.TestConfig;
-import ru.qaway.bookstore.tests.rest.client.TestClient;
+import ru.qaway.bookstore.tests.BookStoreTestBase;
 import ru.qaway.bookstore.tests.rest.enums.Category;
 import ru.qaway.bookstore.tests.rest.model.request.Book;
 import ru.qaway.bookstore.tests.rest.model.response.BookValidatableResponse;
 import static io.restassured.RestAssured.given;
 import static org.apache.commons.lang3.RandomStringUtils.*;
 
-public class CreateBookTest {
+public class CreateBookTest extends BookStoreTestBase {
 
     @Test(dataProvider = "createBooks")
     public void testCreateBook(Book book) {
-
-        TestClient testClient = new TestClient();
 
         BookValidatableResponse response = testClient.create(book).
                 checkStatusCode(201).
