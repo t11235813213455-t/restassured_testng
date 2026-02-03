@@ -1,24 +1,22 @@
 package ru.qaway.bookstore.tests;
 
 import io.restassured.http.ContentType;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hamcrest.Matchers;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.qaway.bookstore.tests.props.TestConfig;
 import ru.qaway.bookstore.tests.rest.client.TestClient;
 import ru.qaway.bookstore.tests.rest.enums.Category;
 import ru.qaway.bookstore.tests.rest.model.request.Book;
 import ru.qaway.bookstore.tests.rest.model.response.BookValidatableResponse;
-
 import static io.restassured.RestAssured.given;
+import static org.apache.commons.lang3.RandomStringUtils.*;
 
 public class CreateBookTest {
 
-    @Test
-    public void testCreateBook() {
-
-        Book book = new Book("The Adventures of Tom Sawyer",
-                "The story about Tom Sawyer.",
-                "Mark Twain", 350, 10, Category.Adventures);
+    @Test(dataProvider = "createBooks")
+    public void testCreateBook(Book book) {
 
         TestClient testClient = new TestClient();
 
@@ -33,5 +31,25 @@ public class CreateBookTest {
                 checkId(response.getId()).
                 checkLastUpdated().
                 checkBook(book);
+    }
+
+    @DataProvider
+    public Object[][] createBooks() {
+        return new Object[][] {
+                { Book.defaultOf() },
+
+                { Book.defaultOf().setTitle(randomAlphabetic(3)) },
+                { Book.defaultOf().setTitle(randomAlphabetic(256)) },
+                { Book.defaultOf().setDescription(randomAlphabetic(3)) },
+                { Book.defaultOf().setDescription(randomAlphabetic(512)) },
+                { Book.defaultOf().setAuthor(randomAlphabetic(3)) },
+                { Book.defaultOf().setAuthor(randomAlphabetic(100)) },
+                { Book.defaultOf().setPrice(0) },
+                { Book.defaultOf().setCount(0) },
+                { Book.defaultOf().setCategory(Category.Detective) },
+                { Book.defaultOf().setCategory(Category.Fiction) },
+                { Book.defaultOf().setCategory(Category.Horror) },
+                { Book.defaultOf().setCategory(Category.Thriller) },
+        };
     }
 }
